@@ -35,10 +35,31 @@ var PPCState = PPCState || {
 
 };
 
+
+var PPCFormPopulate = PPCFormPopulate || {
+    config: {
+        populateOn : 'name'
+    },
+    state: {
+        hasDOMLibrary: false,
+        fieldsMatched: [],
+        fieldsMapped: [],
+        getParams: []
+    },
+    checkDOMLibrary : function(){
+        if($||jQuery){
+            this.state.hasDOMLibrary = true;
+        }else{
+            this.config.populateOn = 'id';
+        }
+    }
+}
+
+
 var PPCAttribution = PPCAttribution || {
     config: {},
     state: {
-        paramsAr: [],
+        paramsObjArr: [],
         fieldsAr: [],
         getVarsToNamedFields: {}
     },
@@ -67,7 +88,7 @@ var PPCAttribution = PPCAttribution || {
                 'key': tempAr[0],
                 'val' : tempAr[1]
             }
-            this.state.paramsAr.push(obj);
+            this.state.paramsObjArr.push(obj);
         }
     }
 };
