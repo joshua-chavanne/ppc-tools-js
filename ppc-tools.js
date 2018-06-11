@@ -90,7 +90,25 @@ var PPCFormPopulate = PPCFormPopulate || {
             this.state.fieldsMapped.push(thisObj);
         }
     },
-    matchFields : function(){},
+    matchFields : function(){
+        var matchOn =[], fieldsWithVals = [], domNodesMatched=[];
+        for(var i = 0, len = this.state.fieldsMapped.length; i<len; i++){
+            console.log(this.state.fieldsMapped[i]);
+            if(this.state.fieldsMapped[i].value !== null){
+                fieldsWithVals.push(this.state.fieldsMapped[i]);
+            }
+        }
+        console.log(fieldsWithVals);
+        if(this.config.populateOn === 'name'){
+            console.log('looking for name fields');
+            for(var _i = 0, len = fieldsWithVals.length; _i<len; _i++){
+                
+                var selectorString = "[name="+fieldsWithVals[_i].name+"]",valueToPopulate = fieldsWithVals[_i].value;
+                console.log(selectorString);
+                $(selectorString).val(valueToPopulate);
+            }
+        }
+    },
     populateDOM: function(){
 
     },
