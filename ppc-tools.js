@@ -100,12 +100,13 @@ var PPCFormPopulate = PPCFormPopulate || {
         }
         console.log(fieldsWithVals);
         if(this.config.populateOn === 'name'){
-            console.log('looking for name fields');
             for(var _i = 0, len = fieldsWithVals.length; _i<len; _i++){
-                
                 var selectorString = "[name="+fieldsWithVals[_i].name+"]",valueToPopulate = fieldsWithVals[_i].value;
-                console.log(selectorString);
                 $(selectorString).val(valueToPopulate);
+            }
+        }else{
+            for(var _i=0, len = fieldsWithVals.length;  _i<len; _i++){
+                document.getElementById(fieldsWithVals[_i].name).value(fieldsWithVals[_i].value);
             }
         }
     },
