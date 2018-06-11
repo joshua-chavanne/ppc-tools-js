@@ -38,13 +38,24 @@ var PPCState = PPCState || {
 
 var PPCFormPopulate = PPCFormPopulate || {
     config: {
-        populateOn : 'name'
+        populateOn : 'name',
+        fieldsToParamHash: {
+            'VendorID' : 'utm_source',
+            'CampaignID' : 'utm_campaign',
+            'Device' : 'device'
+        }
     },
     state: {
         hasDOMLibrary: false,
         fieldsMatched: [],
         fieldsMapped: [],
-        getParams: []
+        paramHash : {},
+        paramValueHashArr: [],
+    },
+    getConfig: function(){
+        if(typeof PPCTools.formConfig !== null){
+            this.config = PPCTools.formConfig;
+        }
     },
     checkDOMLibrary : function(){
         if($||jQuery){
@@ -52,6 +63,44 @@ var PPCFormPopulate = PPCFormPopulate || {
         }else{
             this.config.populateOn = 'id';
         }
+    },
+    getAttributionFields : function(){
+        var obj = {};
+        if(typeof PPCAttribution !== undefined){
+            PPCAttribution.pullGETParams();
+            this.state.paramValueHashArr = PPCAttribution.state.paramsObjArr;
+            for(var i=0; i< this.state.paramValueHashArr.length; i++){
+                obj[this.state.paramValueHashArr[i].key] = this.state.paramValueHashArr[i].val;
+            }
+            this.state.paramHash = obj;
+        }
+    },
+    mapFields : function(){
+        var fieldsKeys = Object.keys(this.config.fieldsToParamHash), paramsKeys = [], paramsValues = {};
+        for(var _i =0, len = fieldsKeys.length; _i < len; _i++){
+            paramsKeys.push(this.config.fieldsToParamHash[fieldsKeys[_i]]);
+        }
+        console.log(fieldsKeys);
+        console.log(paramsKeys);
+        for(var _i = 0, len = fieldsKeys.length; _i< len; _i++){
+            var fieldName = fieldsKeys[_i], paramName = paramsKeys[_i], paramVal = null, thisObj ={};
+            thisObj['name'] = fieldName;
+            thisObj['param'] = paramName;
+            thisObj['value'] = this.state.paramHash[paramName] || null;
+            this.state.fieldsMapped.push(thisObj);
+        }
+    },
+    matchFields : function(){},
+    populateDOM: function(){
+
+    },
+    init: function(){
+        //this.getConfig();
+        this.checkDOMLibrary();
+        this.getAttributionFields();
+        this.mapFields();
+        this.matchFields();
+        this.populateDOM();
     }
 }
 

@@ -1,3 +1,3 @@
 jQuery(document).ready(function(){
-    PPCAttribution.pullGETParams();
+    PPCFormPopulate.init();
 });
