@@ -9,7 +9,22 @@
  * Date: 2018-06-08T17:24Z
  */
 
-var PPCTools= PPCTools|| {};
+var PPCTools= PPCTools|| {
+    state: {},
+    config: {
+        storage: 'cookie',
+    },
+    init: function(){
+        this.loadConfig();
+        this.loadState();
+    },
+    loadConfig: function(){
+
+    },
+    loadState: function(){
+
+    },
+};
 
 
 // Namespace pattern from JavaScript Patterns Copyright Stoyan Stefanov
@@ -31,8 +46,14 @@ PPCTools.namespace = function(ns_string){
     return parent;
 }
 
-var PPCState = PPCState || {
+PPCTools.config = {};
 
+var PPCState = PPCState || {
+    firstImpression: null,
+    history: [],
+    updateHistory: function(){
+
+    },
 };
 
 
@@ -42,7 +63,8 @@ var PPCFormPopulate = PPCFormPopulate || {
         fieldsToParamHash: {
             'VendorID' : 'utm_source',
             'CampaignID' : 'utm_campaign',
-            'Device' : 'device'
+            'Device' : 'device',
+            'gclid' : 'gclid'
         }
     },
     state: {
@@ -110,22 +132,21 @@ var PPCFormPopulate = PPCFormPopulate || {
             }
         }
     },
-    populateDOM: function(){
-
-    },
     init: function(){
         //this.getConfig();
         this.checkDOMLibrary();
         this.getAttributionFields();
         this.mapFields();
         this.matchFields();
-        this.populateDOM();
     }
 }
 
 
 var PPCAttribution = PPCAttribution || {
-    config: {},
+    config: {
+        persistentType: 'cookie',
+        cookieName: 'ppc_crumb',
+    },
     state: {
         paramsObjArr: [],
         fieldsAr: [],
@@ -158,5 +179,11 @@ var PPCAttribution = PPCAttribution || {
             }
             this.state.paramsObjArr.push(obj);
         }
+    },
+    checkPersistentStore: function(){
+
+    },
+    getParamsFromLocalStorage: function(){
+
     }
 };
