@@ -160,7 +160,7 @@ var PPCAttribution = PPCAttribution || {
          }
         else{
             if(cookieHandler){
-                getString = cookieHandler.getCookie(this.config.cookieName);
+                getString = this.getFromCookie();
             }
              //Check if stored in cookie or localstorage
         }
@@ -186,6 +186,9 @@ var PPCAttribution = PPCAttribution || {
     },
     checkPersistentStore: function(){
 
+    },
+    getFromCookie : function(){
+        return cookieHandler.getCookie(this.config.cookieName);
     },
     setParamsToLocalStorage: function(){
         var params = this.state.paramsObjArr;
