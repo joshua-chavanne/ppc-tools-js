@@ -15,12 +15,13 @@ jQuery(document).ready(function(){
 // Vanilla JS to get around all of the old versions of JQuery
 document.addEventListener("DOMContentLoaded",function($){
     var cookieName = 'ppc_crumb';
-     window.queryString = window.location.search;
+    var history = [];
+    window.queryString = window.location.search;
 
     if(localStorage){
-        var history = [];
+        
         try{
-            history = JSON.parse(localStorage.getItem('ppc_history'));
+            history = JSON.parse(localStorage.getItem('ppc_history')) || [];
         }
         catch{
         }

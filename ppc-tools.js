@@ -183,7 +183,13 @@ var PPCAttribution = PPCAttribution || {
     checkPersistentStore: function(){
 
     },
-    getParamsFromLocalStorage: function(){
+    setParamsToLocalStorage: function(){
+        var params = this.state.paramsObjArr;
 
-    }
+        localStorage.setItem(this.config.cookieName, JSON.stringify(params));
+    },
+    getParamsFromLocalStorage: function(){
+        
+    },
+    
 };
