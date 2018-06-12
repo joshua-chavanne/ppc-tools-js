@@ -20,13 +20,13 @@ document.addEventListener("DOMContentLoaded",function($){
     if(localStorage){
         var history = [];
         try{
-            history = JSON.parse(localStorage.getItem('history'));
+            history = JSON.parse(localStorage.getItem('ppc_history'));
         }
         catch{
         }
-        history.push(window.location);
+        history.push(window.location.href);
         localStorage.setItem(cookieName, window.queryString);
-        localStorage.setItem('history',JSON.stringify(history));
+        localStorage.setItem('ppc_history',JSON.stringify(history));
     }
     if(cookieHandler.getCookie('ppc_crumb') && window.queryString.indexOf(cookieHandler.options.varToCheck) === -1)
     {
