@@ -13,6 +13,7 @@ var PPCTools= PPCTools|| {
     state: {},
     config: {
         storage: 'cookie',
+        storageKey: 'ppc_crumb'
     },
     init: function(){
         this.loadConfig();
@@ -154,11 +155,14 @@ var PPCAttribution = PPCAttribution || {
     },
     pullGETParams : function(context){
         var getString;
-        if(typeof context === 'undefined'){
-            getString = document.location.href.slice(document.location.href.indexOf('?'));
-        }
+        if( window.location.search.indexOf(cookieHandler.options.varToCheck) != -1 ){
+             getString = document.location.href.slice(document.location.href.indexOf('?'));
+         }
         else{
-            // Check if stored in cookie or localstorage
+            if(cookieHandler){
+                getString = cookieHandler.getCookie(this.config.cookieName);
+            }
+             //Check if stored in cookie or localstorage
         }
         this.gatherGETParamsAr(getString);
     },
