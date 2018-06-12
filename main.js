@@ -16,6 +16,18 @@ jQuery(document).ready(function(){
 document.addEventListener("DOMContentLoaded",function($){
     var cookieName = 'ppc_crumb';
      window.queryString = window.location.search;
+
+    if(localStorage){
+        var history = [];
+        try{
+            history = JSON.parse(localStorage.getItem('history'));
+        }
+        catch{
+        }
+        history.push(window.location);
+        localStorage.setItem(cookieName, window.queryString);
+        localStorage.setItem('history',JSON.stringify(history));
+    }
     if(cookieHandler.getCookie('ppc_crumb') && window.queryString.indexOf(cookieHandler.options.varToCheck) === -1)
     {
       //alert('cookie present');

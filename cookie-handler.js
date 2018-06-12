@@ -49,4 +49,4 @@ cookieHandler.parseQueryString = function parseQueryString(){
 cookieHandler.processUTM = function procesUTM(){};
 
 
-export default cookieHandler;
+//export default cookieHandler;
