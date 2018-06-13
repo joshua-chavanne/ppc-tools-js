@@ -10,8 +10,8 @@ jQuery(document).ready(function(){
     }
     PPCFormPopulate.init();
 
+   //PPCTools.config = {};
 
-    
 });
 
 

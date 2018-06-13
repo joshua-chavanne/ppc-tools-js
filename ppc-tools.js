@@ -10,7 +10,9 @@
  */
 
 var PPCTools= PPCTools|| {
-    state: {},
+    state: {
+        data: 'hello'
+    },
     config: {
         storage: 'cookie',
         attributionKey: 'ppc_crumb',
@@ -25,7 +27,7 @@ var PPCTools= PPCTools|| {
     },
     loadState: function(){
 
-    },
+    }
 };
 
 
@@ -48,7 +50,7 @@ PPCTools.namespace = function(ns_string){
     return parent;
 }
 
-PPCTools.config = {};
+
 
 var PPCState = PPCState || {
     firstImpression: null,
@@ -159,13 +161,16 @@ var PPCAttribution = PPCAttribution || {
         var getString;
         if( window.location.search.indexOf(cookieHandler.options.varToCheck) != -1 ){
              getString = document.location.href.slice(document.location.href.indexOf('?'));
+             console.log('PPC Tools looking for GET');
          }
         else{
-            if( cookieHandler && (PPCTools.config.storage === 'cookie') {
+            if( cookieHandler &&   PPCTools.config.storage === 'cookie' ) {
                 getString = this.getFromCookie();
+                console.log('PPC Tools looking for cookie');
             }
             if( PPCTools.config.storage === 'localStore'){
                 getString = this.getFromLocalStore();
+                console.log('PPC Tools looking for localStoage');
             }
              //Check if stored in cookie or localstorage
         }
@@ -174,11 +179,13 @@ var PPCAttribution = PPCAttribution || {
     },
     gatherGETParamsAr: function(getString){
         var partsAr, firstParam;
-        if(getString.length>0){
-            partsAr = getString.split('&');
-            partsAr[0] = partsAr[0].replace('?','');
-        }
-        this.buildParamsHashTable(partsAr);
+        try {
+            if(getString.length>0){
+                partsAr = getString.split('&');
+                partsAr[0] = partsAr[0].replace('?','');
+            }
+            this.buildParamsHashTable(partsAr);
+        }catch{}
     },
     buildParamsHashTable: function(partsAr){
         for( var i = 0; i < partsAr.length; i++){
@@ -199,7 +206,7 @@ var PPCAttribution = PPCAttribution || {
     setParamsToLocalStorage: function(){
         var params = this.state.paramsObjArr;
 
-        localStorage.setItem(this.config.cookieName, );
+        localStorage.setItem(this.config.cookieName,getString);
     },
     getParamsFromLocalStorage: function(){
 
