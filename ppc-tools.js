@@ -69,6 +69,9 @@ var PPCFormPopulate = PPCFormPopulate || {
             'CampaignID' : 'utm_campaign',
             'Device' : 'device',
             'gclid' : 'gclid'
+        },
+        valueMappings :{
+            'google' : 'GooglePPC'
         }
     },
     state: {
@@ -136,6 +139,9 @@ var PPCFormPopulate = PPCFormPopulate || {
             }
         }
     },
+    valueMapper : function(){
+        
+    }
     init: function(){
         //this.getConfig();
         this.checkDOMLibrary();
