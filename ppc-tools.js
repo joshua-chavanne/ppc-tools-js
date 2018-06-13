@@ -139,9 +139,14 @@ var PPCFormPopulate = PPCFormPopulate || {
             }
         }
     },
-    valueMapper : function(){
-        
-    }
+    valueMapper : function(valueToCheck){
+        var valueHash = this.config.valueMappings || {}, valueKeys = Object.keys(valueHash), valToExport = valueToCheck;
+        console.log(valueKeys);
+        if(valueKeys.indexOf(valueToCheck) > -1 ){
+            valToExport = console.log(valueHash[valueToCheck]);
+        }
+        return valToExport;
+    },
     init: function(){
         //this.getConfig();
         this.checkDOMLibrary();

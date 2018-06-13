@@ -6,6 +6,8 @@ jQuery(document).ready(function(){
             'CampaignID' : 'utm_campaign',
             'Device' : 'device',
             'gclid' : 'gclid'
+        },valueMappings: {
+            'google' : 'GooglePPC'
         }
     }
     PPCFormPopulate.init();
