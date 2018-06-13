@@ -13,7 +13,8 @@ var PPCTools= PPCTools|| {
     state: {},
     config: {
         storage: 'cookie',
-        storageKey: 'ppc_crumb'
+        attributionKey: 'ppc_crumb',
+        historyKey : 'history'
     },
     init: function(){
         this.loadConfig();
@@ -151,7 +152,8 @@ var PPCAttribution = PPCAttribution || {
     state: {
         paramsObjArr: [],
         fieldsAr: [],
-        getVarsToNamedFields: {}
+        getVarsToNamedFields: {},
+        getString : ''
     },
     pullGETParams : function(context){
         var getString;
@@ -159,11 +161,15 @@ var PPCAttribution = PPCAttribution || {
              getString = document.location.href.slice(document.location.href.indexOf('?'));
          }
         else{
-            if(cookieHandler){
+            if( cookieHandler && (PPCTools.config.storage === 'cookie') {
                 getString = this.getFromCookie();
+            }
+            if( PPCTools.config.storage === 'localStore'){
+                getString = this.getFromLocalStore();
             }
              //Check if stored in cookie or localstorage
         }
+        this.state.getString = getString;
         this.gatherGETParamsAr(getString);
     },
     gatherGETParamsAr: function(getString){
@@ -174,7 +180,7 @@ var PPCAttribution = PPCAttribution || {
         }
         this.buildParamsHashTable(partsAr);
     },
-    buildParamsHashTable(partsAr){
+    buildParamsHashTable: function(partsAr){
         for( var i = 0; i < partsAr.length; i++){
             var tempAr = partsAr[i].split('='), obj, key, val;
             obj = {
@@ -184,8 +190,8 @@ var PPCAttribution = PPCAttribution || {
             this.state.paramsObjArr.push(obj);
         }
     },
-    checkPersistentStore: function(){
-
+    getFromLocalStore: function(){
+        return localStorage.getItem(this.config.cookieName);
     },
     getFromCookie : function(){
         return cookieHandler.getCookie(this.config.cookieName);
@@ -193,10 +199,9 @@ var PPCAttribution = PPCAttribution || {
     setParamsToLocalStorage: function(){
         var params = this.state.paramsObjArr;
 
-        localStorage.setItem(this.config.cookieName, JSON.stringify(params));
+        localStorage.setItem(this.config.cookieName, );
     },
     getParamsFromLocalStorage: function(){
-        
-    },
-    
+
+    }
 };
